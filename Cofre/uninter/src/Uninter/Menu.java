@@ -45,7 +45,7 @@ public class Menu {
             case"4":
                 double valorTotalConvertido = cofrinho.valorTotalConvertido();
                 String valorTotalConvertidoTextual = String.format("%.2f",valorTotalConvertido);
-                valorTotalConvertidoTextual = valorTotalConvertidoTextual.replace(".",",")
+                valorTotalConvertidoTextual = valorTotalConvertidoTextual.replace(".",",");
                 System.out.println("O valor total convertido para real ?" + valorTotalConvertidoTextual);
                 exibirMenuPrincipal();
                 break;
@@ -53,7 +53,7 @@ public class Menu {
             default:
                 System.out.println("Opcao invalida!");
                 exibirMenuPrincipal();
-                break;0
+                break;
 
             }
     }
@@ -73,14 +73,58 @@ public class Menu {
         valorTextualMoeda = valorTextualMoeda.replace(",", ".");
         double valorMoeda = Double.parseDouble(valorTextualMoeda);
 
-        Moeda moeda = null
+        Moeda moeda = null;
 
         if (opcaoMoeda ==1){
             moeda = new Real(valorMoeda);
         } else if (opcaoMoeda == 2) {
-
+            moeda = new Dolar(valorMoeda);
+        } else if (opcaoMoeda == 3) {
+            moeda = new Euro(valorMoeda);
+        } else {
+            System.out.println("Nao existe essa moeda!");
+            exibirMenuPrincipal();
         }
 
+        cofrinho.adicionar(moeda);
+        System.out.println("Moeda adicionada");
+    }
+
+    private void exibirSubMenuRemoverMoedas() {
+        System.out.println("Escolha Moeda:");
+        System.out.println("1 - Real:");
+        System.out.println("2 - Dolar:");
+        System.out.println("3 - Euro:");
+
+        int opcaoMoeda = sc.nextInt();
+
+        System.out.println("Digite o valor:");
+
+        String valorTextualMoeda = sc.next();
+
+        valorTextualMoeda = valorTextualMoeda.replace(".",".");
+        double valorMoeda = Double.parseDouble(valorTextualMoeda);
+
+        Moeda moeda = null;
+
+        if (opcaoMoeda == 1){
+            moeda = new Real(valorMoeda);
+        } else if (opcaoMoeda == 2) {
+            moeda = new Dolar(valorMoeda);
+        } else if (opcaoMoeda == 3) {
+            moeda = new Euro(valorMoeda);
+        } else {
+            System.out.println("Nao esxite essa moeda!");
+            exibirMenuPrincipal();
+        }
+
+
+        boolean removeuMoeda = cofrinho.remover(moeda);
+        if(removeuMoeda) {
+            System.out.println("Moeda removida com sucesso!");
+        }else {
+            System.out.println("Nao foi encontrada nenhuma moeda com esse valor!");
+        }
     }
 
 }
